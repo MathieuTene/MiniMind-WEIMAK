@@ -4,14 +4,11 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copier les fichiers de dépendances
-COPY package.json package-lock.json* pnpm-lock.yaml* ./
+COPY package.json package-lock.json* ./
 
 # Installer les dépendances
-RUN if [ -f pnpm-lock.yaml ]; then \
-      corepack enable pnpm && pnpm install --frozen-lockfile; \
-    else \
-      npm ci; \
-    fi
+# Utiliser npm install pour s'assurer que toutes les dépendances sont installées
+RUN npm install --legacy-peer-deps
 
 # Copier le reste des fichiers
 COPY . .
