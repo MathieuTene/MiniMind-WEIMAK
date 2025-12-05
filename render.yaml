@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: minimind-weimak
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: frankfurt
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: GOOGLE_API_KEY
+        sync: false
+      # Ajoutez d'autres variables d'environnement si nécessaire
+    healthCheckPath: /
+    autoDeploy: true
+
