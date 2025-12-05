@@ -3,12 +3,12 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copier les fichiers de dépendances
-COPY package.json package-lock.json* ./
+# Copier uniquement package.json d'abord
+COPY package.json ./
 
-# Installer les dépendances
-# Utiliser npm install pour s'assurer que toutes les dépendances sont installées
-RUN npm install --legacy-peer-deps
+# Installer les dépendances directement depuis package.json
+# Cela évite les problèmes de lockfile désynchronisé
+RUN npm install --legacy-peer-deps --no-package-lock
 
 # Copier le reste des fichiers
 COPY . .
